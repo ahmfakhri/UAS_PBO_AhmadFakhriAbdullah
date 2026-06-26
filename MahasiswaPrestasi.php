@@ -28,6 +28,31 @@ class MahasiswaPrestasi extends Mahasiswa
         $this->minimalIpkSyarat = $minimalIpkSyarat;
     }
 
+    public static function getAll($conn)
+{
+    $sql = "SELECT * FROM tabel_mahasiswa
+            WHERE jenis_pembiayaan = 'Prestasi'";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
+    $data = [];
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $data[] = new self(
+            $row['id_mahasiswa'],
+            $row['nama_mahasiswa'],
+            $row['nim'],
+            $row['semester'],
+            $row['tarif_ukt_nominal'],
+            $row['nama_instansi_beasiswa'],
+            $row['minimal_ipk_syarat']
+        );
+    }
+
+    return $data;
+}
+
     // Method Overriding
     public function hitungTagihanSemester()
     {

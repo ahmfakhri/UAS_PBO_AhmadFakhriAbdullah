@@ -28,6 +28,31 @@ class MahasiswaMandiri extends Mahasiswa
         $this->namaWali = $namaWali;
     }
 
+    public static function getAll($conn)
+{
+    $sql = "SELECT * FROM tabel_mahasiswa
+            WHERE jenis_pembiayaan = 'Mandiri'";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
+    $data = [];
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $data[] = new self(
+            $row['id_mahasiswa'],
+            $row['nama_mahasiswa'],
+            $row['nim'],
+            $row['semester'],
+            $row['tarif_ukt_nominal'],
+            $row['golongan_ukt'],
+            $row['nama_wali']
+        );
+    }
+
+    return $data;
+}
+
     // Method Overriding
     public function hitungTagihanSemester()
     {

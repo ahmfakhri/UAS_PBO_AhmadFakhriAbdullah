@@ -28,6 +28,31 @@ class MahasiswaBidikMisi extends Mahasiswa
         $this->danaSakuSubsidi = $danaSakuSubsidi;
     }
 
+    public static function getAll($conn)
+{
+    $sql = "SELECT * FROM tabel_mahasiswa
+            WHERE jenis_pembiayaan = 'BidikMisi'";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
+    $data = [];
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $data[] = new self(
+            $row['id_mahasiswa'],
+            $row['nama_mahasiswa'],
+            $row['nim'],
+            $row['semester'],
+            $row['tarif_ukt_nominal'],
+            $row['nomor_kip_kuliah'],
+            $row['dana_saku_subsidi']
+        );
+    }
+
+    return $data;
+}
+
     // Method Overriding
     public function hitungTagihanSemester()
     {
