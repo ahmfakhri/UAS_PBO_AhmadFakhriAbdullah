@@ -28,9 +28,10 @@ class MahasiswaPrestasi extends Mahasiswa
         $this->minimalIpkSyarat = $minimalIpkSyarat;
     }
 
+    // Method Overriding
     public function hitungTagihanSemester()
     {
-        return 0;
+        return $this->tarifUktNominal * 0.25;
     }
 
     public function tampilkanSpesifikasiAkademik()
